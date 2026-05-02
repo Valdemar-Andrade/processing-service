@@ -165,7 +165,7 @@ Este serviço segue os princípios da arquitetura de micro-serviços:
 - Desacoplamento de serviços através de comunicação assíncrona
 - Simulação de latência em fluxos de trabalho industriais
 
-## Serviço de Matéria-Prima:
+## Outros Serviços:
 - [raw-material-service](https://github.com/Valdemar-Andrade/raw-material-service.git)
 
 ## 👤 Autor
