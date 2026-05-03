@@ -1,6 +1,8 @@
 package com.projeto.processingservice.kafka;
 
 import com.projeto.processingservice.dto.BaseEvent;
+import com.projeto.processingservice.enums.EventType;
+import com.projeto.processingservice.service.ProcessingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -18,8 +20,8 @@ public class KafkaRawMaterialConsumer {
 
     @KafkaListener(topics = "industria-carro", groupId = "processing-group")
     public void consume(BaseEvent event) {
-        if ("RAW_MATERIAL_EXTRACTED".equals(event.eventType())) {
-            logger.info("[KAFKA] Matéria-prima recebida para processamento: {}", event.eventId());
+        if (EventType.RAW_MATERIAL_EXTRACTED.name().equals(event.eventType())) {
+            logger.info("[processing-service] Matéria-prima recebida para processamento: {}", event.eventId());
             processingService.process(event);
         }
     }
