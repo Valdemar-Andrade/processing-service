@@ -167,6 +167,7 @@ Este serviço segue os princípios da arquitetura de micro-serviços:
 
 ## Outros Serviços:
 - [raw-material-service](https://github.com/Valdemar-Andrade/raw-material-service.git)
+- [component-service](https://github.com/Valdemar-Andrade/component-service.git)
 
 ## 👤 Desenvolvedor
 - GitHub: [@Valdemar-Andrade]
