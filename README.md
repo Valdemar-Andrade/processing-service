@@ -168,6 +168,6 @@ Este serviço segue os princípios da arquitetura de micro-serviços:
 ## Outros Serviços:
 - [raw-material-service](https://github.com/Valdemar-Andrade/raw-material-service.git)
 
-## 👤 Autor
+## 👤 Desenvolvedor
 - GitHub: [@Valdemar-Andrade]
 - LinkedIn: [Valdemar Andrade](https://www.linkedin.com/in/valdemar-andrade-8b0b45189)
