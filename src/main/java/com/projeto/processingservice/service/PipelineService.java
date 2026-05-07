@@ -24,23 +24,23 @@ public class PipelineService {
 
     @Async
     public void execute(ProductionPipeline pipeline, ProcessedMaterial entity, Map<String, Object> rawMaterialPayload) {
-        // Simula o tempo (Total 18s conforme PDF)[cite: 1]
+        // Simula o tempo (Total 18s)
         for (PipelineStep step : pipeline.getSteps()) {
             try { Thread.sleep(step.getDurationMs()); } catch (InterruptedException e) { return; }
         }
 
-        // Monta a Árvore: ProcessedMaterial -> contém -> RawMaterial[cite: 1]
+        // Monta a Árvore: ProcessedMaterial -> contém -> RawMaterial
         ProcessedMaterialPayload payload = new ProcessedMaterialPayload(
                 entity.getId().toString(),
                 entity.getName(),
                 "TRANSFORMED_MATERIAL",
                 new ProducerDTO("processing-service", "Steel-Refinery-01"),
                 new PurposeDTO("CAR", "VARIOUS", "Material base processado"),
-                List.of(rawMaterialPayload) // O RawMaterial entra aqui como filho![cite: 1]
+                List.of(rawMaterialPayload) // O RawMaterial entra aqui como filho
         );
 
         BaseEvent event = BaseEvent.create(
-                "MATERIAL_PROCESSED", // Evento obrigatório[cite: 1]
+                "MATERIAL_PROCESSED", // Evento obrigatório
                 "processing-service",
                 "component-service",
                 payload

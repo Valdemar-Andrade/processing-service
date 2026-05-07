@@ -25,7 +25,7 @@ public class ProcessingService {
     @Transactional
     public void process(BaseEvent rawEvent) {
         // 1. Extrai o payload da matéria-prima
-        // Nota: O payload chega como LinkedHashMap, você pode converter para seu DTO
+        // Nota: O payload chega como LinkedHashMap, você pode converter para o seu DTO
         Map<String, Object> rawData = (Map<String, Object>) rawEvent.payload();
 
         // 2. Lógica de Transformação
