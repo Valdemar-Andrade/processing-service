@@ -1,64 +1,65 @@
-# Serviço de Processamento
+# Processing Service
 
-Parte de um **Simulador de Pipeline Industrial da Indústria 4.0** distribuído, construído com arquitetura de micro-serviços orientada a eventos.
-
----
-
-## 🧠 Visão Geral do Sistema
-
-Este projeto simula um pipeline de produção industrial real, onde serviços independentes colaboram para produzir bens.
-
-Fluxo do pipeline:
-
-Matéria-prima → Processamento → Produção de Componentes → Montagem do Produto
-
-Cada etapa opera como um microsserviço isolado, comunicando através de eventos Kafka.
+Part of a distributed **Industry 4.0 Industrial Pipeline Simulator**, built with an event-driven microservices architecture.
 
 ---
 
-## 🎯 Função deste Serviço
+## 🧠 System Overview
 
-O **Serviço de Processamento** é responsável pela transformação das matérias-primas em materiais industriais utilizáveis.
+This project simulates a real industrial production pipeline, where independent services collaborate to produce goods.
 
-Atua como a segunda etapa do pipeline de produção, ligando a extração da matéria-prima ao fabrico de componentes.
+Pipeline Flow:
 
-Exemplos:
-- Minério de ferro → Aço
-- Areia → Vidro
-- Látex → Borracha
+Raw Material → Processing → Component Production → Product Assembly
 
----
-
-## ⚙️ Responsabilidades
-
-- Consumir eventos de matéria-prima do Kafka
-- Aplicar pipelines de transformação às matérias-primas
-- Validar regras de transformação e compatibilidade
-- Persistir materiais processados
-- Publicar eventos de materiais processados ​​para serviços subsequentes
+Each step operates as an isolated microservice, communicating through Kafka events.
 
 ---
 
-## 🔄 Posição no Pipeline
-[ Serviço de Matéria-Prima ] → [ Serviço de Processamento ] → [ Serviço de Componentes ] → [ Serviço de Montagem ]
+## 🎯 Function of this Service
+
+The **Processing Service** is responsible for transforming raw materials into usable industrial materials.
+
+It acts as the second stage of the production pipeline, linking raw material extraction to component manufacturing.
+
+Examples:
+
+- Iron ore → Steel
+- Sand → Glass
+- Latex → Rubber
 
 ---
 
-## 📡 Comunicação Orientada a Eventos
+## ⚙️ Responsibilities
 
-### Eventos Consumidos
+- Consume raw material events from Kafka
+- Apply transformation pipelines to raw materials
+- Validate transformation rules and compatibility
+- Persist processed materials
+- Publish processed material events to subsequent services
+
+---
+
+## 🔄 Pipeline Position
+[Raw Material Service] → [Processing Service] → [Component Service] → [Assembly Service]
+
+---
+
+## 📡 Event-Driven Communication
+
+### Events Consumed
 
 - `RAW_MATERIAL_EXTRACTED`
 
-### Eventos Produzidos
+### Events Produced
 
 - `MATERIAL_PROCESSED`
 
 ---
 
-## 📦 Estrutura do Evento
+## 📦 Event Structure
 
-### Evento de Entrada
+### Entry Event
 
 ```
 {
@@ -76,13 +77,13 @@ Exemplos:
 
 "name": "Iron Ore",
 
-"quantidade": 10
+"quantity": 10
 
 }
 }
 ```
 
-### Evento de Saída
+### Exit Event
 
 ```
 {
@@ -98,77 +99,78 @@ Exemplos:
 
 "payload": {
 
-"nome": "Steel",
+"name": "Steel",
 
-"quantidade": 8
+"quantity": 8
 
 }
 }
 ```
 
-## ⏱️ Pipeline de Processamento (Simulação de Latência)
+## ⏱️ Processing Pipeline (Latency Simulation)
 
-A transformação de materiais é realizada em etapas baseadas no tempo.
+Material transformation is performed in time-based steps.
 
-Exemplo: Produção de Aço
+Example: Steel Production
 ```
 [
-{ "name": "FUNDIÇÃO", "durationMs": 8000 },
+{ "name": "FOUNDRY", "durationMs": 8000 },
 
-{ "name": "REFINO", "durationMs": 6000 }
+{ "name": "REFINING", "durationMs": 6000 }
+
 ]
 ```
 
-Isto garante atrasos realistas no processamento industrial.
+This ensures realistic delays in industrial processing.
 
 POST /processing/start
 ```
-{
-"material": "Minério de Ferro",
+{ "material": "Iron Ore",
 
-"quantidade": 10
+"quantity": 10
+
 }
 ```
 
-**Nota:** Em funcionamento normal, o processamento é automaticamente acionado através de eventos Kafka.
+**Note:** In normal operation, processing is triggered automatically via Kafka events.
 
-## 🔄 Fluxo Interno
+## 🔄 Internal Flow
 
-Receber evento Kafka (RAW_MATERIAL_EXTRACTED)
-Validar se o material pode ser processado
-Executar pipeline de transformação (com atraso)
-Converter matéria-prima em material processado
-Persistir o resultado na base de dados
-Publicar evento MATERIAL_PROCESSED
+Receive Kafka event (RAW_MATERIAL_EXTRACTED)
+Validate if the material can be processed
+Execute transformation pipeline (with delay)
+Convert raw material into processed material
+Persist the result in the database
+Publish MATERIAL_PROCESSED event
 
-## 🗄️ Propriedade dos Dados
+## 🗄️ Data Ownership
 
-Este serviço segue os princípios da arquitetura de micro-serviços:
+This service follows the principles of microservices architecture:
 
-## Base de dados própria
-- Sem acesso direto aos dados de outros serviços
-- Comunicação estritamente via eventos Kafka
+## Own database
+- No direct access to data from other services
+- Communication strictly via Kafka events
 
-## 🧱 Tecnologias
+## 🧱 Technologies
 - Java + Spring Boot
 - Apache Kafka
 - PostgreSQL
 - Docker
 
-## Executar o Serviço
+## Running the Service
 - docker-compose up --build
 
-## 🧠 Conceitos-chave Demonstrados
+## 🧠 Key Concepts Demonstrated
 
-- Pipelines de processamento orientados a eventos
-- Transformação de dados em sistemas distribuídos
-- Desacoplamento de serviços através de comunicação assíncrona
-- Simulação de latência em fluxos de trabalho industriais
+- Event-driven processing pipelines
+- Data transformation in distributed systems
+- Decoupling of services through communication Asynchronous
+- Latency simulation in industrial workflows
 
-## Outros Serviços:
+## Other Services:
 - [raw-material-service](https://github.com/Valdemar-Andrade/raw-material-service.git)
 - [component-service](https://github.com/Valdemar-Andrade/component-service.git)
 
-## 👤 Desenvolvedor
+## 👤 Developer
 - GitHub: [@Valdemar-Andrade]
 - LinkedIn: [Valdemar Andrade](https://www.linkedin.com/in/valdemar-andrade-8b0b45189)
