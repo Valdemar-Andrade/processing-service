@@ -18,7 +18,7 @@ public class KafkaRawMaterialConsumer {
         this.processingService = processingService;
     }
 
-    @KafkaListener(topics = "industria-carro", groupId = "processing-group")
+    @KafkaListener(id = "processing-service", topics = "industria-carro")
     public void consume(BaseEvent event) {
         if (EventType.RAW_MATERIAL_EXTRACTED.name().equals(event.eventType())) {
             logger.info("[processing-service] Matéria-prima recebida para processamento: {}", event.eventId());

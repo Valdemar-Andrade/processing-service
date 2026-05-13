@@ -24,14 +24,10 @@ public class ProcessingService {
 
     @Transactional
     public void process(BaseEvent rawEvent) {
-        // 1. Extrai o payload da matéria-prima
-        // Nota: O payload chega como LinkedHashMap, você pode converter para o seu DTO
         Map<String, Object> rawData = (Map<String, Object>) rawEvent.payload();
 
-        // 2. Lógica de Transformação
         String transformedName = transform(rawData.get("name").toString());
 
-        // 3. Persiste o início do refinamento
         ProcessedMaterial processed = ProcessedMaterial.builder()
                 .name(transformedName)
                 .type("TRANSFORMED_MATERIAL")
@@ -40,10 +36,8 @@ public class ProcessingService {
                 .build();
         repository.save(processed);
 
-        // 4. Cria o Pipeline de Refino conforme o PDF[cite: 1]
         ProductionPipeline pipeline = buildProcessingPipeline(transformedName);
 
-        // 5. Executa a simulação temporal e depois envia MATERIAL_PROCESSED[cite: 1]
         pipelineService.execute(pipeline, processed, rawData);
     }
 
